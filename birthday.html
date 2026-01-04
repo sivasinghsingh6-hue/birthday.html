@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(135deg,#ff5f6d,#ffc371);
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:35px;
+  border-radius:25px;
+  text-align:center;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  animation:pop 1.2s ease;
+  z-index:2;
+}
+@keyframes pop{
+  from{transform:scale(0.5);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* PHOTO */
+.photo{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  border:6px solid #ff4d6d;
+  object-fit:cover;
+  display:none;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,77,109,.7)}
+  70%{box-shadow:0 0 0 20px rgba(255,77,109,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,77,109,0)}
+}
+
+h1{
+  font-family:'Dancing Script',cursive;
+  color:#ff4d6d;
+  font-size:2.7rem;
+  margin:10px 0;
+}
+
+.msg{
+  font-size:1.1rem;
+  min-height:80px;
+  margin:15px 0;
+  transition:.5s;
+}
+
+button{
+  background:#ff4d6d;
+  color:#fff;
+  border:none;
+  padding:14px 30px;
+  border-radius:30px;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.signature{
+  margin-top:15px;
+  font-style:italic;
+  color:#666;
+  display:none;
+}
+
+/* HEARTS */
+.heart{
+  position:absolute;
+  font-size:20px;
+  animation:float 6s linear infinite;
+  opacity:.7;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0}
+  50%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* CONFETTI */
+.confetti{
+  position:absolute;
+  width:10px;
+  height:10px;
+  top:-10px;
+  animation:fall 4s linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <img src="photo.jpg" class="photo" id="pic">
+  <h1>Happy Birthday 🎂</h1>
+  <div class="msg" id="text">Someone has a beautiful surprise for you 💖</div>
+  <button onclick="start()">🎁 Open Surprise</button>
+  <div class="signature" id="sign">— With love, <b>Sivasingh</b> ❤️</div>
+</div>
+
+<script>
+const messages=[
+ "Happy Birthday 🎉",
+ "Tum meri zindagi ki sabse pyaari wajah ho ❤️",
+ "Tumhari smile meri duniya roshan karti hai ✨",
+ "Bhagwan tumhe hamesha khush rakhe 💖",
+ "I am lucky to have you 💕"
+];
+
+let i=0;
+const text=document.getElementById("text");
+const pic=document.getElementById("pic");
+const sign=document.getElementById("sign");
+const music=document.getElementById("music");
+
+function start(){
+  music.play();
+  pic.style.display="block";
+  sign.style.display="block";
+  nextMsg();
+  hearts();
+  confetti();
+}
+
+function nextMsg(){
+  if(i<messages.length){
+    text.innerHTML=messages[i];
+    i++;
+    setTimeout(nextMsg,3000);
+  }
+}
+
+function hearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },300);
+}
+
+function confetti(){
+  setInterval(()=>{
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=["#ff4d6d","#ffd166","#06d6a0","#118ab2"][Math.floor(Math.random()*4)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  },150);
+}
+</script>
+
+</body>
+</html>
